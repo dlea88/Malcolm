@@ -1,0 +1,19 @@
+description: Searching NetBox asset inventory
+
+field_guide: |
+  NetBox search uses a query string — pass the IP address, hostname,
+  device name, or VLAN identifier. The adapter handles API lookups
+  and deep linking into NetBox IPAM/DCIM.
+
+few_shot:
+  - user: "who owns 192.168.1.1"
+    params:
+      query: "192.168.1.1"
+
+  - user: "look up device router-01"
+    params:
+      query: "router-01"
+
+  - user: "what VLAN is 10.0.5.0/24 on"
+    params:
+      query: "10.0.5.0/24"

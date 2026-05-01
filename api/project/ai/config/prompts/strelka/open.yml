@@ -1,0 +1,19 @@
+description: Opening Strelka file scanning views
+
+field_guide: |
+  Strelka accepts file_hash (MD5, SHA1, SHA256) or mime_type to filter
+  file scanning results. Use file.hash.md5 / file.hash.sha256 in
+  filters for hash-based lookups, or file.mime_type for type filtering.
+
+few_shot:
+  - user: "show strelka results for PDF files"
+    params:
+      mime_type: "application/pdf"
+
+  - user: "look up hash abc123def456..."
+    params:
+      file_hash: "abc123def456789012345678901234567890123456789012345678901234"
+
+  - user: "file scanning results from last week"
+    params:
+      time_from: "now-7d"

@@ -1,0 +1,14 @@
+description: Filtering Strelka file scanning results
+
+field_guide: |
+  Use ECS field names: file.mime_type, file.hash.md5, file.hash.sha256,
+  file.name. Time range via time_from/time_to.
+
+few_shot:
+  - user: "filter to executable files"
+    params:
+      filters: { "file.mime_type": "application/x-executable" }
+
+  - user: "show only PDF results"
+    params:
+      filters: { "file.mime_type": "application/pdf" }

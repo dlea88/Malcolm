@@ -1,0 +1,35 @@
+name: Investigate Suricata Alerts
+investigation: true
+description: >-
+  Traces Suricata IDS alerts to their network sessions and PCAPs.
+triggers:
+  - alert
+  - suricata
+  - IDS
+  - detection
+  - signature
+  - DYN_DNS
+  - malware
+  - exploit
+  - CVE
+max_steps: 4
+params:
+  signature_filter:
+    description: Filter by signature name (e.g. MALWARE, DYN_DNS)
+    default: ""
+steps:
+  - goal: Find Suricata alerts
+    tools: [opensearch:search]
+    prompt: >-
+      Search OpenSearch for event.dataset:alert documents.
+      {signature_filter}
+      Look at rule.name for the alert signature and
+      network.community_id to link to network sessions.
+    extract: [network.community_id, rule.name]
+
+  - goal: Find Arkime sessions for the alerted flows
+    tools: [arkime:list_sessions]
+    prompt: >-
+      Search Arkime for sessions matching these community IDs: {prev.network.community_id}
+      Build the expression as: communityId == "id1" || communityId == "id2"
+      IMPORTANT: Always quote community IDs.

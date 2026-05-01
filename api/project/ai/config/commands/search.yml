@@ -1,0 +1,44 @@
+# /search -- Unified search across Malcolm tools (always LLM-routed)
+slash: search
+description: Search across Malcolm tools
+hint: "<natural language query>"
+examples:
+  - "/search DNS traffic from 10.0.0.1"
+  - "/search sessions on port 443 last 7 days"
+  - "/search who owns 192.168.1.1"
+  - "/search suricata alerts for CVE-2021-44228"
+  - "/search strelka results for pdf files"
+  - "/search zeek weird logs"
+tools: [opensearch_dashboards:open, arkime:open, opensearch_dashboards:filter, netbox:search, strelka:open]
+llm:
+  arkime:open:
+    default: >-
+      arkime:open — Open Arkime sessions view with ECS filters.
+      Use when: "show sessions", "packets from", "PCAP for", "connections from IP"
+      filters: ECS field:value pairs (source.ip, destination.ip, network.protocol, etc.)
+  netbox:search:
+    default: >-
+      netbox:search — Look up device/asset ownership in NetBox.
+      Use when: "who owns", "what device", "what is this IP", asset/inventory lookups
+      query: IP address, hostname, device name, or CIDR to look up
+  strelka:open:
+    default: >-
+      strelka:open — Open file scanning results.
+      Use when: "scanned files", "file analysis", "extracted files", "yara matches"
+      filters: file hash, mime type, or filename filters
+verb_guide: >-
+  Search routing guide:
+
+  - For protocol/topic searches (DNS, HTTP, SSH, Suricata alerts, Zeek logs) -> use opensearch_dashboards:open with topic + filters
+
+  - For packet/session/pcap searches or community_id pivots -> use arkime:open with ECS filters
+
+  - For asset/device/VLAN/IP ownership queries -> use netbox:search with query string
+
+  - For file scanning, extracted files, or file hash lookups -> use strelka:open with hash or mime type
+
+  - For narrowing results on the current view -> use opensearch_dashboards:filter with additional ECS field:value pairs
+
+  Common ECS fields for filters: source.ip, destination.ip, related.ip, source.port,
+  destination.port, network.protocol, zeek.dns.query, suricata.alert.signature,
+  file.hash.md5, file.hash.sha256, tags, network.community_id

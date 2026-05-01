@@ -1,0 +1,25 @@
+description: Filtering Arkime sessions
+
+field_guide: |
+  Use ECS field names in the filters dict. Do NOT use raw Arkime
+  expression syntax (no ip.src==, no db:, no &&).
+  Common filter fields: source.ip, destination.ip, network.protocol,
+  source.port, destination.port, tags, network.community_id.
+
+few_shot:
+  - user: "filter by DNS protocol"
+    params:
+      filters: { "network.protocol": "dns" }
+
+  - user: "show only traffic from 192.168.1.0/24"
+    params:
+      filters: { "source.ip": "192.168.1.0/24" }
+
+  - user: "filter to port 443"
+    params:
+      filters: { "destination.port": "443" }
+
+  - user: "show last 2 hours"
+    params:
+      time_from: "now-2h"
+      time_to: "now"

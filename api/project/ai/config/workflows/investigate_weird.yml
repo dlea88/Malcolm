@@ -1,0 +1,44 @@
+name: Investigate Zeek Weird Logs
+investigation: true
+description: >-
+  Traces zeek weird (anomaly) logs through the data chain:
+  weird log → rootId → conn log → community_id → Arkime sessions → PCAP.
+triggers:
+  - weird
+  - anomaly
+  - zeek weird
+  - network anomaly
+  - TCP sequence
+  - misorder
+max_steps: 5
+params:
+  query_filter:
+    description: Lucene filter to narrow weird logs (e.g. source.ip:10.0.0.1)
+    default: ""
+steps:
+  - goal: Find zeek weird logs
+    tools: [opensearch:search]
+    prompt: >-
+      Search OpenSearch for event.dataset:weird documents.
+      {query_filter}
+      Sort by @timestamp descending, limit to 10.
+      Look at the rootId field in the results — you will need these
+      for the next step.
+    extract: [rootId]
+
+  - goal: Find parent connection logs using rootIds
+    tools: [opensearch:search]
+    prompt: >-
+      Search OpenSearch for event.dataset:conn documents
+      where rootId matches one of these values: {prev.rootId}
+      Build a query like: event.dataset:conn AND (rootId:value1 OR rootId:value2)
+      Look at network.community_id in the results.
+    extract: [network.community_id]
+
+  - goal: Find Arkime sessions for these network flows
+    tools: [arkime:list_sessions]
+    prompt: >-
+      Search Arkime for sessions matching these community IDs: {prev.network.community_id}
+      Build the expression as: communityId == "id1" || communityId == "id2"
+      IMPORTANT: Always put community IDs in double quotes because they
+      contain special characters like : / + =

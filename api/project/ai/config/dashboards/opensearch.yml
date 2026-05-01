@@ -1,0 +1,44 @@
+# OpenSearch Dashboards — core network protocol dashboards
+
+dashboards:
+
+  0ad3d7c2-3441-485e-9dfe-dbb22e84e576:
+    title: Overview
+    keywords: [overview, event, dataset, provider, summary]
+    service: opensearch_dashboards
+    profile:
+      data_source: mixed
+      primary_fields:
+        - source.ip
+        - destination.ip
+        - network.protocol
+        - event.dataset
+        - event.provider
+      field_hints: >-
+        Overview shows aggregate counts across all data sources.
+        Filter by IP, protocol, or data source.
+      pivot_affordances: {}
+
+  abdd7550-2c7c-40dc-947e-f6d186a158c4:
+    title: Connections
+    keywords: [connection, conn, network, traffic, flow]
+    service: opensearch_dashboards
+    profile:
+      data_source: zeek
+      primary_fields:
+        - source.ip
+        - destination.ip
+        - source.port
+        - destination.port
+        - network.protocol
+        - network.transport
+        - network.community_id
+      field_hints: >-
+        Connections dashboard shows Zeek conn.log data. Use source.ip,
+        destination.ip, ports, and protocol to filter. network.community_id
+        links to Arkime sessions.
+      pivot_affordances:
+        network.community_id:
+          target: arkime
+          expression_field: communityId
+          description: View this connection in Arkime

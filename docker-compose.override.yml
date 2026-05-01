@@ -1,0 +1,46 @@
+# Development overrides for AI integration testing.
+# Bind-mounts source code into containers for hot-reload development.
+
+services:
+  api:
+    command: >-
+      sh -c "pip install --quiet 'any-llm-sdk[ollama]' mcp 2>/dev/null;
+             gunicorn --bind 0:5000 --chdir /malcolm/api manage:app"
+    volumes:
+    - type: bind
+      source: ./api/project
+      target: /malcolm/api/project
+    environment:
+    - AI_ENABLED=true
+    - AI_DEFAULT_MODEL=llama-3_2-3b
+    - AI_SAFETY_MODE=single
+    - AI_AUDIT_ENABLED=true
+    - OLLAMA_URL=http://172.19.0.1:11434
+    - PYTHONPATH=/usr/src/app
+
+  opensearch:
+    environment:
+    - OPENSEARCH_JAVA_OPTS=-server -Xmx8g -Xms8g -Xss256k -XX:-HeapDumpOnOutOfMemoryError -Djava.security.egd=file:/dev/./urandom -Dlog4j.formatMsgNoLookups=true
+
+  nginx-proxy:
+    volumes:
+    - type: bind
+      source: ./nginx/nginx.conf
+      target: /etc/nginx/nginx.conf
+      read_only: true
+    - type: bind
+      source: ./nginx/nginx_ai_widget_injection.conf
+      target: /etc/nginx/nginx_ai_widget_injection.conf
+      read_only: true
+    - type: bind
+      source: ./nginx/landingpage/js/malcolm-ai-widget.js
+      target: /usr/share/nginx/html/js/malcolm-ai-widget.js
+      read_only: true
+    - type: bind
+      source: ./nginx/landingpage/assets/img/malcolm_wheel.svg
+      target: /usr/share/nginx/html/assets/img/malcolm_wheel.svg
+      read_only: true
+    - type: bind
+      source: ./nginx/nginx_dashboards_rewrite_dashboards.conf
+      target: /etc/nginx/nginx_dashboards_rewrite_dashboards.conf
+      read_only: true

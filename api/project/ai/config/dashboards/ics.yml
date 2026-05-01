@@ -1,0 +1,48 @@
+# ICS/OT (Industrial Control Systems) dashboards
+
+dashboards:
+
+  4a4bde20-4760-11ea-949c-bbb5a9feecbf:
+    title: ICS/IoT Security Overview
+    keywords: [ics, iot, industrial, scada, ot, operational technology]
+    service: opensearch_dashboards
+
+  12e3a130-d83b-11eb-a0b0-f328ce09b0b7:
+    title: ICS Best Guess
+    keywords: [ics, best guess, industrial, scada, ot]
+    service: opensearch_dashboards
+
+  152f29dc-51a2-4f53-93e9-6e92765567b8:
+    title: Modbus
+    keywords: [modbus, ics, plc, scada]
+    service: opensearch_dashboards
+
+  870a5862-6c26-4a08-99fd-0c06cda85ba3:
+    title: DNP3
+    keywords: [dnp3, ics, scada, power]
+    service: opensearch_dashboards
+
+  29a1b290-eb98-11e9-a384-0fcf32210194:
+    title: EtherNet/IP
+    keywords: [ethernet/ip, enip, cip, ics]
+    service: opensearch_dashboards
+
+  2bec1490-eb94-11e9-a384-0fcf32210194:
+    title: BACnet
+    keywords: [bacnet, ics, building automation]
+    service: opensearch_dashboards
+
+  a7514350-eba6-11e9-a384-0fcf32210194:
+    title: PROFINET
+    keywords: [profinet, ics, siemens]
+    service: opensearch_dashboards
+
+  e76d05c0-eb9f-11e9-a384-0fcf32210194:
+    title: S7comm / S7comm Plus
+    keywords: [s7comm, s7, siemens, ics, plc]
+    service: opensearch_dashboards
+
+  dd87edd0-796a-11ec-9ce6-b395c1ff58f4:
+    title: OPCUA Binary
+    keywords: [opcua, opc, opc-ua, ics]
+    service: opensearch_dashboards

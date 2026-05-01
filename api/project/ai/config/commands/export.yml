@@ -1,0 +1,10 @@
+# /export — Export pcap from Arkime
+slash: export
+description: Export pcap from Arkime
+hint: "<filters>"
+examples: ["/export pcap for 10.0.0.1", "/export sessions on port 443"]
+tool: arkime:export
+llm:
+  default: >-
+    arkime:export — Export PCAP from Arkime.
+    Use when: "download pcap", "export packet capture", "export sessions"

@@ -1,0 +1,9 @@
+name: nemotron-3-4b
+description: nemotron-3-4b for fast tool selection testing
+provider: ollama
+connection:
+  url: ${OLLAMA_URL:-http://ollama:11434}
+  timeout: 30
+model: nemotron-3-nano:4b
+max_tokens: 512
+structured_output: json

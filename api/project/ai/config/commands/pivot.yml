@@ -1,0 +1,6 @@
+# /pivot — Pivot to another tool with current context
+slash: pivot
+description: Pivot to another tool with current context
+hint: "arkime | strelka | netbox"
+examples: ["/pivot arkime", "/pivot strelka"]
+tools: [arkime:open, strelka:open, netbox:search]

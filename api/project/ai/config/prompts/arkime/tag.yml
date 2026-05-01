@@ -1,0 +1,17 @@
+description: Tagging Arkime sessions
+
+field_guide: |
+  Tag requires both a tag name and filters to identify which sessions to tag.
+  The tag field is the label to apply. Filters narrow which sessions get tagged.
+  Without filters, tagging is rejected — the analyst must specify what to tag.
+
+few_shot:
+  - user: "tag sessions from 10.0.0.1 as malicious"
+    params:
+      tag: "malicious"
+      filters: { "source.ip": "10.0.0.1" }
+
+  - user: "mark DNS traffic as suspicious"
+    params:
+      tag: "suspicious"
+      filters: { "network.protocol": "dns" }

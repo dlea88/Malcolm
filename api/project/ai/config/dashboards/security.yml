@@ -1,0 +1,48 @@
+# Security and detection dashboards
+
+dashboards:
+
+  95479950-41f2-11ea-88fa-7151df485405:
+    title: Security Overview
+    keywords: [security, alert, notice, severity, risk]
+    service: opensearch_dashboards
+
+  7bea79a0-2013-11ec-a1f2-bfc5a90bcc57:
+    title: Security Overview
+    keywords: [security, alert, notice, severity, risk]
+    service: opensearch_dashboards
+    profile:
+      data_source: mixed
+      primary_fields:
+        - source.ip
+        - destination.ip
+        - event.severity
+        - suricata.alert.signature
+        - zeek.notice.category
+        - rule.category
+      field_hints: >-
+        Security Overview aggregates alerts, notices, and severity across all sources.
+      pivot_affordances: {}
+
+  5694ca60-cbdf-11ec-a50a-5fedd672f5c5:
+    title: Suricata Alerts
+    keywords: [suricata, alert, ids, rule, signature]
+    service: opensearch_dashboards
+    profile:
+      data_source: suricata
+      primary_fields:
+        - suricata.alert.signature
+        - suricata.alert.signature_id
+        - suricata.alert.category
+        - source.ip
+        - destination.ip
+        - network.community_id
+      field_hints: >-
+        Suricata Alerts dashboard shows IDS alert detections.
+        Use suricata.alert.signature for rule names, suricata.alert.signature_id
+        for SIDs. The network.community_id links alerts to Arkime sessions.
+      pivot_affordances:
+        network.community_id:
+          target: arkime
+          expression_field: communityId
+          description: View the session that triggered this alert

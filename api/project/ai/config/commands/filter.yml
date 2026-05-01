@@ -1,0 +1,20 @@
+# /filter — Apply a filter to the current dashboard
+slash: filter
+description: Apply a filter to the current dashboard
+hint: "<field> <value>"
+examples: ["/filter source.ip 10.0.0.1", "/filter last 2 weeks", "/filter CVE_2021_44228"]
+tool: opensearch_dashboards:filter
+llm:
+  default: >-
+    opensearch_dashboards:filter — Modify filters or time range on the current dashboard.
+    Use when: "filter to last 2 years", "narrow to source IP 10.0.0.1", "change time range"
+    Only valid when the analyst is already viewing a dashboard.
+  context: >-
+    opensearch_dashboards:filter — Modify filters or time range on the CURRENT view.
+    Use when: "filter", "narrow", "change time range", or referencing values on this view.
+    This keeps the analyst on their current view and applies changes.
+    IMPORTANT: Use ONLY the fields listed above for this view.
+  arkime: >-
+    arkime:open — Refine the current Arkime session query by adding filters.
+    Use when: "filter", "narrow", "add", "also show" — adds to the active expression.
+    Carry forward existing filters and add new ones.

@@ -1,0 +1,12 @@
+# AI engine configuration.
+# Values use ${ENV_VAR:-default} syntax — resolved from ai.env at load time.
+
+default_model: ${AI_DEFAULT_MODEL:-llama-3_2-3b}
+
+safety:
+  mode: ${AI_SAFETY_MODE:-single}  # single, two_step, disabled
+  router_model: ${AI_ROUTER_MODEL:-}  # fast model for tool selection (two_step mode). empty = use default
+
+audit:
+  enabled: ${AI_AUDIT_ENABLED:-false}
+  index: malcolm_ai_audit
