@@ -4,7 +4,7 @@
 services:
   api:
     command: >-
-      sh -c "pip install --quiet 'any-llm-sdk[ollama]' mcp 2>/dev/null;
+      sh -c "pip install --quiet 'any-llm-sdk[ollama]' mcp pyyaml 2>/dev/null;
              gunicorn --bind 0:5000 --chdir /malcolm/api manage:app"
     volumes:
     - type: bind
