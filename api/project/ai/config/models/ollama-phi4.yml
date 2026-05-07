@@ -1,0 +1,14 @@
+# Microsoft Phi-4 (14B) via Ollama — strong structured output for its size.
+# Requires: ollama pull phi4
+
+name: ollama-phi4
+description: Phi-4 14B for intent resolution
+provider: ollama
+
+connection:
+  url: ${OLLAMA_URL:-http://ollama:11434}
+  timeout: ${OLLAMA_TIMEOUT:-30}
+
+model: phi4
+max_tokens: 512
+structured_output: json

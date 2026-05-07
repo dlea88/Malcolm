@@ -1,0 +1,31 @@
+description: Opening Arkime session views
+
+field_guide: |
+  Arkime accepts ECS field:value pairs in filters. The adapter converts to
+  Arkime expression syntax internally. Do NOT write raw Arkime expressions.
+  Common fields: source.ip, destination.ip, network.protocol,
+  network.community_id, source.port, destination.port, related.ip.
+  For protocol, use the name: dns, http, ssh, tls, quic, etc.
+
+few_shot:
+  - user: "show DNS traffic from 10.0.0.1"
+    params:
+      filters: { "source.ip": "10.0.0.1", "network.protocol": "dns" }
+      time_from: "now-1d"
+
+  - user: "sessions with community ID 1:abc123"
+    params:
+      filters: { "network.community_id": "1:abc123" }
+
+  - user: "all HTTP sessions last 7 days"
+    params:
+      filters: { "network.protocol": "http" }
+      time_from: "now-7d"
+
+  - user: "traffic between 10.0.0.1 and 10.0.0.2"
+    params:
+      filters: { "source.ip": "10.0.0.1", "destination.ip": "10.0.0.2" }
+
+  - user: "TLS sessions on port 8443"
+    params:
+      filters: { "network.protocol": "tls", "destination.port": "8443" }

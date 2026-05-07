@@ -1,0 +1,28 @@
+name: Investigate Connection by IP
+investigation: true
+description: >-
+  Finds all sessions for an IP address with protocol breakdown.
+triggers:
+  - connection
+  - traffic from
+  - traffic to
+  - sessions for
+  - investigate IP
+  - all traffic
+max_steps: 3
+params:
+  ip:
+    description: IP address to investigate
+    required: true
+steps:
+  - goal: Find all Arkime sessions for this IP
+    tools: [arkime:list_sessions]
+    prompt: >-
+      Search Arkime for all sessions involving IP {ip}.
+      Use expression: ip.src == {ip} || ip.dst == {ip}
+
+  - goal: Get protocol breakdown
+    tools: [opensearch:aggregate]
+    prompt: >-
+      Aggregate network.protocol for traffic involving {ip}.
+      Use query: source.ip:{ip} OR destination.ip:{ip}

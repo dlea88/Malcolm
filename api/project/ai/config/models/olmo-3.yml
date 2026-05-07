@@ -1,0 +1,15 @@
+# Olmo 3 7B — Ai2, Apache 2.0, American-made.
+# Fast 7B model for tool selection and general orchestration.
+# Requires: ollama pull olmo-3
+
+name: olmo-3
+description: Olmo 3 7B (Ai2, Apache 2.0) for fast orchestration
+provider: ollama
+
+connection:
+  url: ${OLLAMA_URL:-http://ollama:11434}
+  timeout: 30
+
+model: olmo-3
+max_tokens: 512
+structured_output: json

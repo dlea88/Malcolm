@@ -1,0 +1,14 @@
+# Anthropic Claude Sonnet via BYOAPI
+# Requires: ANTHROPIC_API_KEY env var set in config/ai.env
+
+name: anthropic-claude-sonnet
+description: Claude Sonnet for intent resolution
+provider: anthropic
+
+connection:
+  api_key_env: ANTHROPIC_API_KEY
+  timeout: 30
+
+model: claude-sonnet-4-6
+max_tokens: 512
+structured_output: json

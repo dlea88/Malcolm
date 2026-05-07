@@ -1,0 +1,14 @@
+# Default Ollama model — configurable via OLLAMA_MODEL env var.
+# Common choices: llama3.1:8b, mistral:7b, phi4
+
+name: ollama-llama-3_1-8b
+description: Llama 3.1 8B via Ollama
+provider: ollama
+
+connection:
+  url: ${OLLAMA_URL:-http://ollama:11434}
+  timeout: ${OLLAMA_TIMEOUT:-30}
+
+model: ${OLLAMA_MODEL:-llama3.1:8b}
+max_tokens: 512
+structured_output: json

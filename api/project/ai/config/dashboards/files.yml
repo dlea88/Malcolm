@@ -1,0 +1,45 @@
+# File analysis dashboards (Zeek file extraction + Strelka scanning)
+
+dashboards:
+
+  9ee51f94-3316-4fc5-bd89-93a52af69714:
+    title: Files
+    keywords: [file, hash, md5, sha256, download, extracted]
+    service: opensearch_dashboards
+    profile:
+      data_source: zeek
+      primary_fields:
+        - file.hash.md5
+        - file.hash.sha256
+        - file.mime_type
+        - file.name
+        - source.ip
+        - destination.ip
+      field_hints: >-
+        Files dashboard shows extracted file metadata from Zeek.
+        Use file.hash.sha256 or file.hash.md5 for hash lookups.
+      pivot_affordances:
+        file.hash.sha256:
+          target: strelka
+          description: View Strelka scan results
+
+  248cae60-eff9-11f0-b83f-8f35d6995138:
+    title: File Scanning
+    keywords: [filescan, strelka, file scan, malware, yara]
+    service: opensearch_dashboards
+    profile:
+      data_source: strelka
+      primary_fields:
+        - file.hash.md5
+        - file.hash.sha256
+        - file.mime_type
+        - file.name
+      field_hints: >-
+        File Scanning dashboard shows Strelka scan results.
+        Filter by hash, MIME type, or filename.
+      pivot_affordances: {}
+
+  0a490422-0ce9-44bf-9a2d-19329ddde8c3:
+    title: PE
+    keywords: [pe, portable executable, exe, dll, binary]
+    service: opensearch_dashboards

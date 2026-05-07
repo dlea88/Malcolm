@@ -1,0 +1,36 @@
+name: Triage Suricata Alerts
+investigation: true
+description: >-
+  SOC alert triage workflow: get high-severity alerts, inspect the
+  sessions that triggered them, look up source/dest assets in NetBox.
+triggers:
+  - triage
+  - triage alerts
+  - high severity
+  - critical alerts
+  - SOC
+  - incident
+max_steps: 4
+steps:
+  - goal: Get recent high-severity alerts
+    tools: [opensearch:search]
+    prompt: >-
+      Search OpenSearch for high severity alerts.
+      Use query: event.dataset:alert AND event.severity:[1 TO 3]
+      Sort by @timestamp descending, limit to 10.
+      Look at rule.name, source.ip, destination.ip, network.community_id.
+    extract: [network.community_id, source.ip, destination.ip]
+
+  - goal: Get session details for the alerted traffic
+    tools: [arkime:list_sessions]
+    prompt: >-
+      Search Arkime for sessions matching these community IDs: {prev.network.community_id}
+      Build expression: communityId == "id1" || communityId == "id2"
+      IMPORTANT: Always quote community IDs.
+
+  - goal: Look up source IPs in NetBox for asset context
+    tools: [netbox:lookup_device]
+    prompt: >-
+      Look up the source IP addresses in NetBox to determine what
+      devices generated the alerts: {prev.source.ip}
+      Use the first IP address as the query.

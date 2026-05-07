@@ -1,0 +1,52 @@
+# Connection variant dashboards (geo maps, sub-views)
+# These are indexed with lower search priority.
+
+dashboards:
+
+  0aed0e23-c8ac-4f2b-9f68-d04b6e7666b0:
+    title: Connections (variant)
+    keywords: [connection]
+    service: opensearch_dashboards
+    low_priority: true
+
+  1ce42250-3f99-11e9-a58e-8bdedb0915e8:
+    title: Connections (variant)
+    keywords: [connection]
+    service: opensearch_dashboards
+    low_priority: true
+
+  39abfe30-3f99-11e9-a58e-8bdedb0915e8:
+    title: Connections (variant)
+    keywords: [connection]
+    service: opensearch_dashboards
+    low_priority: true
+
+  55e332d0-3f99-11e9-a58e-8bdedb0915e8:
+    title: Connections (variant)
+    keywords: [connection]
+    service: opensearch_dashboards
+    low_priority: true
+
+  60d78fbd-471c-4f59-a9e3-189b33a13644:
+    title: Connections (variant)
+    keywords: [connection]
+    service: opensearch_dashboards
+    low_priority: true
+
+  77fc9960-3f99-11e9-a58e-8bdedb0915e8:
+    title: Connections (variant)
+    keywords: [connection]
+    service: opensearch_dashboards
+    low_priority: true
+
+  a16110b0-3f99-11e9-a58e-8bdedb0915e8:
+    title: Connections (variant)
+    keywords: [connection]
+    service: opensearch_dashboards
+    low_priority: true
+
+  b50c8d17-6ed3-4de6-aed4-5181032810b2:
+    title: Connections (variant)
+    keywords: [connection]
+    service: opensearch_dashboards
+    low_priority: true

@@ -1,0 +1,25 @@
+description: Filtering on OpenSearch dashboards
+
+field_guide: |
+  Use ECS field names in the filters dict. Time range adjustments use
+  time_from/time_to fields. Common fields: source.ip, destination.ip,
+  network.protocol, zeek.dns.query, suricata.alert.signature,
+  file.mime_type, tags, network.community_id.
+
+few_shot:
+  - user: "filter by source IP 10.0.0.1"
+    params:
+      filters: { "source.ip": "10.0.0.1" }
+
+  - user: "show only DNS queries for evil.com"
+    params:
+      filters: { "zeek.dns.query": "evil.com" }
+
+  - user: "narrow to last 2 hours"
+    params:
+      time_from: "now-2h"
+      time_to: "now"
+
+  - user: "filter suricata alerts by signature"
+    params:
+      filters: { "suricata.alert.signature": "ET MALWARE" }

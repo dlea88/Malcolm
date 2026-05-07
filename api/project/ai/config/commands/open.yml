@@ -1,0 +1,15 @@
+# /open — Open a dashboard by name
+slash: open
+description: Open a dashboard by name
+hint: "<dashboard name>"
+examples: ["/open dns", "/open connections", "/open zeek notices"]
+tool: opensearch_dashboards:open
+llm:
+  default: >-
+    opensearch_dashboards:open — Open a Malcolm dashboard by topic name.
+    Use when: "show DNS traffic", "open the HTTP dashboard", "view connections"
+    topic: The dashboard subject (DNS, HTTP, SSH, Connections, Suricata Alerts, Overview, Files, etc.)
+    filters: ECS field:value pairs (optional)
+  context: >-
+    opensearch_dashboards:open — Open a different Malcolm dashboard by topic name.
+    Use when: analyst wants to switch dashboards.

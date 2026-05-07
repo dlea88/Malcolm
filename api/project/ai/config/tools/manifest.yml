@@ -1,0 +1,73 @@
+# Tool manifest — single source of truth for UI-level tool definitions.
+#
+# The LLM selects from these tools (small vocabulary for routing accuracy
+# on 3B models). Each tool maps to a service-level tool for execution.
+#
+# Adding a tool: add an entry here. SafetyGate, routes.py, and prompts.py
+# all derive from this file automatically.
+
+tools:
+  arkime:open:
+    description: Open Arkime sessions with filters
+    service_tool: arkime:list_sessions
+    translator: arkime_open
+    params:
+      filters: "dict of ECS field name -> value. Example: {\"source.ip\": \"10.0.0.1\", \"network.protocol\": \"dns\"}"
+      time_from: "relative time string like 'now-24h', 'now-7d', 'now-1M'. Optional."
+      time_to: "relative time string, usually 'now'. Optional."
+    example: '{"filters": {"source.ip": "10.200.1.252", "network.protocol": "dns"}, "time_from": "now-1d"}'
+
+  opensearch_dashboards:open:
+    description: Open a dashboard by topic
+    service_tool: opensearch:search
+    translator: dashboard_open
+    params:
+      topic: "Dashboard name: DNS, HTTP, SSH, Connections, Suricata Alerts, Overview, Files, etc."
+      filters: "dict of ECS field name -> value. Optional. Example: {\"source.ip\": \"10.0.0.1\"}"
+      time_from: "relative time string. Optional."
+      time_to: "relative time string. Optional."
+    example: '{"topic": "DNS", "filters": {"source.ip": "10.200.1.252"}, "time_from": "now-1d"}'
+
+  opensearch_dashboards:filter:
+    description: Apply filters to the current dashboard
+    service_tool: opensearch:search
+    translator: dashboard_filter
+    params:
+      filters: "dict of ECS field name -> value to add as filters"
+      time_from: "relative time string. Optional."
+      time_to: "relative time string. Optional."
+    example: '{"filters": {"source.ip": "10.0.0.1"}, "time_from": "now-7d"}'
+
+  netbox:search:
+    description: Look up a device or IP in NetBox
+    service_tool: netbox:lookup_device
+    translator: netbox_search
+    params:
+      query: "the IP address, hostname, or device name to search for"
+    example: '{"query": "10.50.1.10"}'
+
+  arkime:export:
+    description: Export PCAP from Arkime
+    service_tool: arkime:export_pcap
+    translator: arkime_export
+    params:
+      expression: "Arkime expression to match sessions"
+      time_from: "Optional start time"
+      time_to: "Optional end time"
+    example: '{"expression": "ip.src == 10.0.0.1 && protocols == dns"}'
+
+  strelka:open:
+    description: Open file scanning results
+    service_tool: opensearch:search
+    translator: strelka_open
+    params:
+      filters: "dict with file hash, mime type, or filename"
+    example: '{"filters": {"file.hash.sha256": "abc123..."}}'
+
+  unknown:
+    description: Request is outside Malcolm's domain
+    service_tool: null
+    translator: null
+    params:
+      reason: "why this request cannot be handled"
+    example: '{"reason": "Request is unrelated to network security analysis"}'

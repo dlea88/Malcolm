@@ -1,0 +1,32 @@
+description: Opening OpenSearch dashboards by topic
+
+field_guide: |
+  Use the topic field to select a dashboard by name (DNS, HTTP, SSH,
+  Connections, Suricata Alerts, etc.). Use filters for ECS field:value
+  pairs to pre-filter the dashboard. Time range scopes the view.
+  Prefer opensearch_dashboards:open for protocol/log dashboards.
+
+few_shot:
+  - user: "open DNS dashboard"
+    params:
+      topic: "DNS"
+
+  - user: "show me suricata alerts from the last week"
+    params:
+      topic: "Suricata Alerts"
+      time_from: "now-7d"
+
+  - user: "HTTP traffic from 10.0.0.1 last 24 hours"
+    params:
+      topic: "HTTP"
+      filters: { "source.ip": "10.0.0.1" }
+      time_from: "now-24h"
+
+  - user: "show zeek weird logs"
+    params:
+      topic: "Weird"
+
+  - user: "view SSH connections to 192.168.1.100"
+    params:
+      topic: "SSH"
+      filters: { "destination.ip": "192.168.1.100" }

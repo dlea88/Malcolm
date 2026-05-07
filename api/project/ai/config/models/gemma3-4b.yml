@@ -1,0 +1,9 @@
+name: gemma3-4b
+description: gemma3-4b for fast tool selection testing
+provider: ollama
+connection:
+  url: ${OLLAMA_URL:-http://ollama:11434}
+  timeout: 30
+model: gemma3:4b
+max_tokens: 512
+structured_output: json

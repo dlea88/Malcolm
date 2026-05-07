@@ -1,0 +1,9 @@
+name: qwen2_5-3b
+description: Qwen2.5-3B non-thinking, strong structured JSON output
+provider: ollama
+connection:
+  url: ${OLLAMA_URL:-http://ollama:11434}
+  timeout: 30
+model: qwen2.5:3b
+max_tokens: 512
+structured_output: json

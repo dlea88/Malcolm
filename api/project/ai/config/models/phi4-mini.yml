@@ -1,0 +1,9 @@
+name: phi4-mini
+description: Phi-4 Mini for fast tool selection testing
+provider: ollama
+connection:
+  url: ${OLLAMA_URL:-http://ollama:11434}
+  timeout: 30
+model: phi4-mini
+max_tokens: 512
+structured_output: json

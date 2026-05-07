@@ -1,0 +1,17 @@
+description: Exporting PCAPs from Arkime
+
+field_guide: |
+  Export opens Arkime sessions with filters pre-applied so the analyst
+  can use the session export actions to download PCAPs.
+  Filters narrow which sessions to export. Time range scopes the window.
+
+few_shot:
+  - user: "export pcap for 10.0.0.1"
+    params:
+      filters: { "source.ip": "10.0.0.1" }
+      time_from: "now-1d"
+
+  - user: "download DNS traffic from last week"
+    params:
+      filters: { "network.protocol": "dns" }
+      time_from: "now-7d"

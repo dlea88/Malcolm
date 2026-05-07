@@ -1,0 +1,29 @@
+name: Investigate Extracted Files
+investigation: true
+description: >-
+  Follow up on file extraction events: find extracted files,
+  check scan results, trace back to the network session.
+triggers:
+  - file
+  - extracted
+  - strelka
+  - yara
+  - scan results
+  - file hash
+max_steps: 3
+steps:
+  - goal: Find file extraction events
+    tools: [opensearch:search]
+    prompt: >-
+      Search OpenSearch for file extraction events.
+      Use query: event.dataset:files OR event.provider:zeek AND event.dataset:files
+      Look at file.hash.sha256, file.name, file.mime_type, and
+      network.community_id to link back to the session.
+    extract: [network.community_id, file.hash.sha256]
+
+  - goal: Find the network session that transferred the file
+    tools: [arkime:list_sessions]
+    prompt: >-
+      Search Arkime for the session that transferred these files.
+      Use the community IDs from the previous step: {prev.network.community_id}
+      Build expression: communityId == "id1" || communityId == "id2"

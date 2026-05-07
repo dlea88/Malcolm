@@ -1,0 +1,247 @@
+# Protocol-specific dashboards — discovered from live Malcolm instance
+
+dashboards:
+
+  2cf94cd0-ecab-40a5-95a7-8419f3a39cd9:
+    title: DNS
+    keywords: [dns, domain, query, resolve, nameserver]
+    service: opensearch_dashboards
+    profile:
+      data_source: zeek
+      primary_fields:
+        - source.ip
+        - destination.ip
+        - zeek.dns.query
+        - dns.question.name
+        - dns.response_code
+        - dns.type
+      field_hints: >-
+        DNS dashboard shows Zeek dns.log data. Use zeek.dns.query or
+        dns.question.name for domain lookups, dns.response_code for
+        errors, source.ip for client queries.
+      pivot_affordances:
+        network.community_id:
+          target: arkime
+          expression_field: communityId
+          description: View DNS session in Arkime
+
+  37041ee1-79c0-4684-a436-3173b0e89876:
+    title: HTTP
+    keywords: [http, web, url, uri, request, response, user-agent]
+    service: opensearch_dashboards
+    profile:
+      data_source: zeek
+      primary_fields:
+        - source.ip
+        - destination.ip
+        - url.domain
+        - http.request.method
+        - http.response.status_code
+        - user_agent.original
+        - zeek.http.uri
+      field_hints: >-
+        HTTP dashboard shows Zeek http.log data. Use url.domain for
+        sites visited, http.request.method for methods, user_agent.original
+        for client identification.
+      pivot_affordances:
+        network.community_id:
+          target: arkime
+          expression_field: communityId
+          description: View HTTP session in Arkime
+
+  caef3ade-d289-4d05-a511-149f3e97f238:
+    title: SSH
+    keywords: [ssh, secure shell, login, remote, key exchange]
+    service: opensearch_dashboards
+    profile:
+      data_source: zeek
+      primary_fields:
+        - source.ip
+        - destination.ip
+        - zeek.ssh.auth_success
+        - zeek.ssh.client
+        - zeek.ssh.server
+        - zeek.ssh.direction
+      field_hints: >-
+        SSH dashboard shows Zeek ssh.log data. Use zeek.ssh.auth_success
+        to filter by login success/failure. Client and server fields show
+        SSH version strings.
+      pivot_affordances: {}
+
+  7f77b58a-df3e-4cc2-b782-fd7f8bad8ffb:
+    title: SSL
+    keywords: [ssl, tls, certificate, x509, encryption, ja3, ja4]
+    service: opensearch_dashboards
+    profile:
+      data_source: zeek
+      primary_fields:
+        - source.ip
+        - destination.ip
+        - tls.server.subject
+        - tls.server.issuer
+        - zeek.ssl.version
+        - tls.server.ja3s
+      field_hints: >-
+        SSL/TLS dashboard shows Zeek ssl.log data. Use tls.server.subject
+        for certificate subjects, zeek.ssl.version for TLS versions.
+      pivot_affordances: {}
+
+  2d98bb8e-214c-4374-837b-20e1bcd63a5e:
+    title: DHCP
+    keywords: [dhcp, ip assignment, lease, mac address]
+    service: opensearch_dashboards
+
+  82da3101-2a9c-4ae2-bb61-d447a3fbe673:
+    title: Kerberos
+    keywords: [kerberos, authentication, ticket, krb5, active directory]
+    service: opensearch_dashboards
+
+  bb827f8e-639e-468c-93c8-9f5bc132eb8f:
+    title: SMTP
+    keywords: [smtp, email, mail, envelope]
+    service: opensearch_dashboards
+
+  078b9aa5-9bd4-4f02-ae5e-cf80fa6f887b:
+    title: FTP
+    keywords: [ftp, file transfer]
+    service: opensearch_dashboards
+
+  7f41913f-cba8-43f5-82a8-241b7ead03e0:
+    title: RDP
+    keywords: [rdp, remote desktop, windows remote]
+    service: opensearch_dashboards
+
+  543118a9-02d7-43fe-b669-b8652177fc37:
+    title: NTLM
+    keywords: [ntlm, authentication, windows, smb auth]
+    service: opensearch_dashboards
+
+  42e831b9-41a9-4f35-8b7d-e1566d368773:
+    title: SMB
+    keywords: [smb, samba, file share, windows share, cifs]
+    service: opensearch_dashboards
+
+  05e3e000-f118-11e9-acda-83a8e29e1a24:
+    title: LDAP
+    keywords: [ldap, directory, active directory, bind]
+    service: opensearch_dashboards
+
+  4e5f106e-c60a-4226-8f64-d534abb912ab:
+    title: SNMP
+    keywords: [snmp, network management, monitoring, trap]
+    service: opensearch_dashboards
+
+  af5df620-eeb6-11e9-bdef-65a192b7f586:
+    title: NTP
+    keywords: [ntp, time, clock, synchronization]
+    service: opensearch_dashboards
+
+  0b2354ae-0fe9-4fd9-b156-1c3870e5c7aa:
+    title: SIP
+    keywords: [sip, voip, phone, telephony]
+    service: opensearch_dashboards
+
+  87a32f90-ef58-11e9-974e-9d600036d105:
+    title: MQTT
+    keywords: [mqtt, iot, message queue, publish, subscribe]
+    service: opensearch_dashboards
+
+  11ddd980-e388-11e9-b568-cf17de8e860c:
+    title: QUIC
+    keywords: [quic, http3, udp transport]
+    service: opensearch_dashboards
+
+  c2549e10-7f2e-11ea-9f8a-1fe1327e2cd2:
+    title: Telnet
+    keywords: [telnet, rlogin, rsh, remote shell, cleartext]
+    service: opensearch_dashboards
+
+  bf5efbb0-60f1-11eb-9d60-dbf0411cfc48:
+    title: TFTP
+    keywords: [tftp, trivial file transfer]
+    service: opensearch_dashboards
+
+  76f2f912-80da-44cd-ab66-6a73c8344cc3:
+    title: IRC
+    keywords: [irc, chat, internet relay]
+    service: opensearch_dashboards
+
+  ae79b7d1-4281-4095-b2f6-fa7eafda9970:
+    title: RADIUS
+    keywords: [radius, authentication, aaa, network access]
+    service: opensearch_dashboards
+
+  f77bf097-18a8-465c-b634-eb2acc7a4f26:
+    title: RFB
+    keywords: [rfb, vnc, remote framebuffer, screen sharing]
+    service: opensearch_dashboards
+
+  11be6381-beef-40a7-bdce-88c5398392fc:
+    title: Tunnels
+    keywords: [tunnel, vpn, gre, ipip, encapsulation]
+    service: opensearch_dashboards
+
+  b8cf5890-87ed-11ef-ae18-dbcd34795edb:
+    title: WebSocket
+    keywords: [websocket, ws, wss, real-time]
+    service: opensearch_dashboards
+
+  665d1610-523d-11e9-a30e-e3576242f3ed:
+    title: Signatures
+    keywords: [signature, detection, rule, match]
+    service: opensearch_dashboards
+
+  36ed695f-edcc-47c1-b0ec-50d20c93ce0f:
+    title: Threat Intelligence
+    keywords: [threat, intelligence, ioc, indicator, ti]
+    service: opensearch_dashboards
+
+  87d990cc-9e0b-41e5-b8fe-b10ae1da0c85:
+    title: Software
+    keywords: [software, version, application, fingerprint]
+    service: opensearch_dashboards
+
+  a33e0a50-afcd-11ea-993f-b7d8522a8bed:
+    title: Actions and Results
+    keywords: [action, result, outcome]
+    service: opensearch_dashboards
+
+  d2dd0180-06b1-11ec-8c6b-353266ade330:
+    title: Severity
+    keywords: [severity, risk, priority, threat level]
+    service: opensearch_dashboards
+
+  89714140-a2d5-11f0-b5ae-e139a66d2205:
+    title: IP Connections Tree
+    keywords: [connection, tree, graph, visualization, topology]
+    service: opensearch_dashboards
+
+  677ee170-809e-11ed-8d5b-07069f823b6f:
+    title: Asset Interaction Analysis
+    keywords: [asset, interaction, communication, relationship]
+    service: opensearch_dashboards
+
+  89d1cc50-974c-11ed-bb6b-3fb06c879b11:
+    title: Zeek Known Summary
+    keywords: [zeek, known, host, service, certificate]
+    service: opensearch_dashboards
+
+  50ced171-1b10-4c3f-8b67-2db9635661a6:
+    title: MySQL
+    keywords: [mysql, database, sql, query]
+    service: opensearch_dashboards
+
+  f2c0da10-d2c5-11ef-8864-d58a560dc292:
+    title: PostgreSQL
+    keywords: [postgresql, postgres, database, sql]
+    service: opensearch_dashboards
+
+  ef0f9be0-7d3d-11f0-9ca7-8bfd0076f5c5:
+    title: Redis
+    keywords: [redis, cache, key-value, database]
+    service: opensearch_dashboards
+
+  432af556-c5c0-4cc3-8166-b274b4e3a406:
+    title: DCE/RPC
+    keywords: [dce, rpc, remote procedure call, windows]
+    service: opensearch_dashboards

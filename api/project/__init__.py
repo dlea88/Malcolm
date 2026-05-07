@@ -249,6 +249,17 @@ databaseClient = DatabaseClass(
 )
 
 
+# Register AI blueprint (gracefully degrades if dependencies missing)
+try:
+    from project.ai.routes import ai_bp
+    app.register_blueprint(
+        ai_bp,
+        url_prefix=f"{('/' + app.config['MALCOLM_API_PREFIX']) if app.config['MALCOLM_API_PREFIX'] else ''}/ai/v1",
+    )
+except ImportError:
+    pass
+
+
 def doctype_is_host_logs(d):
     return any([str(d).lower().startswith(x) for x in ['host', 'beat', 'miscbeat']])
 
