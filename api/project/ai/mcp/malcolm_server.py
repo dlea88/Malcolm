@@ -64,6 +64,30 @@ _prompt_catalog = None
 _tool_manifest = None
 
 
+def _log_model_availability(catalog, default_model_name):
+    """Log a one-line warning per unavailable model so misconfiguration is visible."""
+    default_def = catalog.get(default_model_name)
+    if not default_def:
+        logger.warning(
+            "AI default model '%s' is not defined in the catalog — set AI_DEFAULT_MODEL "
+            "to one of: %s",
+            default_model_name, ", ".join(sorted(catalog.all_models().keys())),
+        )
+    else:
+        avail = default_def.availability()
+        if avail['available']:
+            logger.info("AI default model '%s' is configured and ready", default_model_name)
+        else:
+            logger.warning("AI default model unavailable — %s", avail['hint'])
+
+    for name, model_def in sorted(catalog.all_models().items()):
+        if name == default_model_name:
+            continue
+        avail = model_def.availability()
+        if not avail['available']:
+            logger.info("AI model '%s' unavailable — %s", name, avail['hint'])
+
+
 def _init():
     """Initialize catalogs and LLM client on first use."""
     global _config, _llm, _safety, _audit, _tool_registry, _workflow_registry, _model_catalog, _command_catalog, _dashboard_catalog, _prompt_catalog, _tool_manifest
@@ -73,6 +97,7 @@ def _init():
 
     _config = load_config()
     _model_catalog = ModelCatalog(default_model=_config.default_model)
+    _log_model_availability(_model_catalog, _config.default_model)
     _command_catalog = CommandCatalog()
     _dashboard_catalog = DashboardCatalog()
     _prompt_catalog = PromptCatalog()

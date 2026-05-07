@@ -101,11 +101,25 @@ def _run_async(coro):
 def status():
     """Check if AI features are enabled."""
     from . import config
+    from .config.models import ModelCatalog
     try:
         cfg = config.load_config()
+        catalog = ModelCatalog(default_model=cfg.default_model)
+        default_def = catalog.get(cfg.default_model)
+        default_availability = (
+            default_def.availability()
+            if default_def
+            else {
+                "available": False,
+                "missing": [],
+                "hint": f"default model '{cfg.default_model}' is not defined in the catalog",
+            }
+        )
         return jsonify({
             "enabled": True,
             "default_model": cfg.default_model,
+            "default_model_availability": default_availability,
+            "available_models": sorted(catalog.available_models().keys()),
             "safety_mode": cfg.safety_mode,
             "execute_enabled": AI_EXECUTE_ENABLED,
         })

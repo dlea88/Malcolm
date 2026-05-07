@@ -52,21 +52,68 @@ class ModelDef:
         return self.connection.get('api_key', '')
 
     @property
+    def api_key_env(self):
+        """Name of the env var that holds the API key, if configured."""
+        return self.connection.get('api_key_env', '')
+
+    @property
     def timeout(self):
         try:
             return int(self.connection.get('timeout', 30))
         except (ValueError, TypeError):
             return 30
 
-    def is_available(self):
-        """Check if this model has enough config to attempt a call."""
+    def availability(self):
+        """Structured availability check.
+
+        Returns a dict with:
+          available (bool): can this model be called as configured?
+          missing (list[str]): names of env vars / config fields that need to be set
+          hint (str): one-line operator-facing hint, empty if available
+        """
+        missing = []
+
         if self.provider == 'ollama':
-            return bool(self.url and self.model)
-        if self.provider in ('openai_compatible', 'vllm'):
-            return bool(self.url and self.api_key and self.model)
-        if self.provider == 'anthropic':
-            return bool(self.api_key and self.model)
-        return False
+            if not self.url:
+                missing.append('OLLAMA_URL')
+            if not self.model:
+                missing.append('model (in YAML or OLLAMA_MODEL)')
+        elif self.provider == 'anthropic':
+            if not self.api_key:
+                missing.append(self.api_key_env or 'ANTHROPIC_API_KEY')
+            if not self.model:
+                missing.append('model (in YAML)')
+        elif self.provider == 'openai':
+            if not self.api_key:
+                missing.append(self.api_key_env or 'OPENAI_API_KEY')
+            if not self.model:
+                missing.append('model (in YAML)')
+        elif self.provider in ('openai_compatible', 'vllm'):
+            if not self.url:
+                missing.append('connection.url')
+            if not self.api_key:
+                missing.append(self.api_key_env or 'API_KEY')
+            if not self.model:
+                missing.append('model (in YAML)')
+        else:
+            return {
+                'available': False,
+                'missing': [],
+                'hint': f"unknown provider '{self.provider}' for model '{self.name}'",
+            }
+
+        if not missing:
+            return {'available': True, 'missing': [], 'hint': ''}
+
+        hint = (
+            f"model '{self.name}' (provider={self.provider}) is missing: "
+            f"{', '.join(missing)}"
+        )
+        return {'available': False, 'missing': missing, 'hint': hint}
+
+    def is_available(self):
+        """Boolean compat shim — prefer availability() for actionable errors."""
+        return self.availability()['available']
 
     def __repr__(self):
         return f"ModelDef(name={self.name!r}, provider={self.provider!r}, model={self.model!r})"

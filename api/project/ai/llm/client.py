@@ -34,9 +34,10 @@ class LLMClient:
             logger.error("Model '%s' not found in catalog", model_name)
             raise ValueError(f"Unknown model: {model_name}")
 
-        if not model_def.is_available():
-            logger.error("Model '%s' is not available (missing config)", model_name)
-            raise ValueError(f"Model not available: {model_name}")
+        avail = model_def.availability()
+        if not avail['available']:
+            logger.error("Model '%s' unavailable: %s", model_name, avail['hint'])
+            raise ValueError(avail['hint'])
 
         call_kwargs = {
             "model": model_def.model,
