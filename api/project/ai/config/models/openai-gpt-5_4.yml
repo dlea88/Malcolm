@@ -1,0 +1,15 @@
+# OpenAI GPT-5.4 — frontier reasoning, 1M context.
+# Good for: heavier intent resolution, multi-step reasoning.
+# Requires: OPENAI_API_KEY environment variable.
+
+name: openai-gpt-5_4
+description: GPT-5.4 for intent resolution
+provider: openai
+
+connection:
+  api_key_env: OPENAI_API_KEY
+  timeout: ${OPENAI_TIMEOUT:-60}
+
+model: gpt-5.4
+max_tokens: 512
+structured_output: json

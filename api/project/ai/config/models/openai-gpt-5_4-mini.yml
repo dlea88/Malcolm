@@ -1,0 +1,15 @@
+# OpenAI GPT-5.4 mini — fast, cheap cloud model for tool selection.
+# Good for: rapid tool routing, simple queries, high-volume use.
+# Requires: OPENAI_API_KEY environment variable.
+
+name: openai-gpt-5_4-mini
+description: GPT-5.4 mini for fast tool routing
+provider: openai
+
+connection:
+  api_key_env: OPENAI_API_KEY
+  timeout: ${OPENAI_TIMEOUT:-30}
+
+model: gpt-5.4-mini
+max_tokens: 512
+structured_output: json
