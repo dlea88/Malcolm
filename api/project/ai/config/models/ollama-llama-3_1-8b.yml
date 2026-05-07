@@ -7,7 +7,7 @@ provider: ollama
 
 connection:
   url: ${OLLAMA_URL:-http://localhost:11434}
-  timeout: ${OLLAMA_TIMEOUT:-30}
+  timeout: ${OLLAMA_TIMEOUT:-120}
 
 model: ${OLLAMA_MODEL:-llama3.1:8b}
 max_tokens: 512
