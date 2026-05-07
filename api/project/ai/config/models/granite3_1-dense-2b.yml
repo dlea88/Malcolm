@@ -2,8 +2,8 @@ name: granite3_1-dense-2b
 description: IBM Granite 3.1 Dense 2B for low-latency tool calling
 provider: ollama
 connection:
-  url: ${OLLAMA_URL:-http://ollama:11434}
-  timeout: 30
+  url: ${OLLAMA_URL:-http://localhost:11434}
+  timeout: ${OLLAMA_TIMEOUT:-120}
 model: granite3.1-dense:2b
 max_tokens: 512
 structured_output: json

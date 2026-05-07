@@ -6,7 +6,7 @@ description: Olmo 3 7B Think for reasoning tasks
 provider: ollama
 
 connection:
-  url: ${OLLAMA_URL:-http://ollama:11434}
+  url: ${OLLAMA_URL:-http://localhost:11434}
   timeout: 60
 
 model: olmo-3:7b-think

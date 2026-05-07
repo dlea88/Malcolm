@@ -46,5 +46,5 @@ _nb_pass = os.environ.get("NETBOX_PASSWORD", os.environ.get("MALCOLM_API_PASSWOR
 NETBOX_AUTH = (_nb_user, _nb_pass) if _nb_user else None
 
 # --- Ollama ---
-OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://ollama:11434")
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434")
 OLLAMA_EMBED_MODEL = os.environ.get("OLLAMA_EMBED_MODEL", "llama3.1:8b")
